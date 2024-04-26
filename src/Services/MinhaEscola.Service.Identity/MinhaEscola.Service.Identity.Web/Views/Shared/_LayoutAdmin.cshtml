@@ -1,0 +1,233 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using MinhaEscola.Service.Identity.Web.Models
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@{
+    var path = Context.Request.Path.Value;
+    Func<string, string, string> selecteAMenu = (router, @class) =>
+    {
+        if (router.Contains("**"))
+        {
+            return path.Contains(router.Replace("**", "")) ? @class : "";
+        }
+        else
+        {
+            return path == router ? @class : "";
+        }
+    };
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MinhaEscola.Service.Identity.Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MinhaEscola.Service.Identity.Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.semanticui.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet"  />
+</head>
+<body style="background-repeat: no-repeat; background-size: cover; background-position: center; background-image: url(@ViewData["background-image"]); " class="bg-light">
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: white; border-right-style: solid; border-right-width: 1px; border-right-color:#efefef;">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-black min-vh-100">
+                    <div class="dropdown pb-4">
+                        <a href="#" class="d-flex flex-column align-items-center text-black text-decoration-none" id="dropdownUser1">
+                            <img src="/images/logo.png" alt="hugenerd" class="rounded-circle-image">
+                            @*<span class="d-none d-sm-inline mx-1 text-black" style="font-weight: 700;">Manbager User</span>*@
+                        </a>
+                    </div>
+                    <hr />
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100" id="menu">
+                        <li class="nav-item @selecteAMenu("/Identity/Admin", "activate-menu-item")" data-name-menu="dashboard">
+                            <a href="/Identity/Admin" class="nav-link align-middle px-0">
+                                <i class="fs-4 bi-grid-fill"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item @selecteAMenu("/Identity/Admin/Applications/**", "activate-menu-item")" data-name-menu="dashboard">
+                            <a href="/Identity/Admin/Applications/Manage" class="nav-link align-middle px-0">
+                                <i class="bi bi-pc-display-horizontal"></i> <span class="ms-1 d-none d-sm-inline">Applications</span>
+                            </a>
+                        </li>
+                        <li class="nav-item @selecteAMenu("/Identity/Admin/Users/**", "activate-menu-item")" data-name-menu="dashboard">
+                            <a href="/Identity/Admin/Users/Manage" class="nav-link align-middle px-0">
+                                <i class="bi bi-person-fill-gear"></i> <span class="ms-1 d-none d-sm-inline">Users</span>
+                            </a>
+                        </li>
+                        @*<li class="nav-item">
+                            <a href="#submenu2" data-bs-toggle="collapse" aria-expanded="false" class="nav-link px-0 align-middle">
+                                <i class="fs-4 bi-person-lines-fill"></i> <span class="ms-1 d-none d-sm-inline">My Account</span>
+                            </a>
+                            <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                                <li class="w-100">
+                                    <a href="/Identity/Account/Manage/Index" class="nav-link px-0"> <span class="d-none d-sm-inline"></span> My account configuration </a>
+                                </li>
+                                <li>
+                                    <a href="/Identity/Admin/Users/Email" class="nav-link px-0"> <span class="d-none d-sm-inline"></span>Email</a>
+                                </li>
+                                <li>
+                                    <a href="/Identity/Account/Manage/ChangePassword" class="nav-link px-0"> <span class="d-none d-sm-inline"></span>Password</a>
+                                </li>
+                                <li>
+                                    <a href="/Identity/Account/Manage/PersonalData" class="nav-link px-0"> <span class="d-none d-sm-inline"></span>Personal Data</a>
+                                </li>
+                            </ul>
+                        </li>*@
+                        @*<li class="nav-item">
+                        <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                        <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Products</span>
+                        </a>
+                        <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
+                        <li class="w-100">
+                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 1</a>
+                        </li>
+                        <li>
+                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 2</a>
+                        </li>
+                        <li>
+                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a>
+                        </li>
+                        <li>
+                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a>
+                        </li>
+                        </ul>
+                        </li>*@
+                    </ul>
+
+                </div>
+            </div>
+            <div class="col p-0">
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom mb-3" style="height: 5rem!important;">
+                    <div class="container-fluid" style="display: flex; justify-content: space-between!important; width: 100%; align-items: center; align-content: center;">
+                        <div class="d-flex flex-column" style="height: 100%; justify-content: center; align-items: flex-start; align-content: center;">
+                        </div>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="d-flex gap-2 align-items-center">
+                            <div>
+                                <a id="manage" class="nav-link" style="font-weight: 700; color:  #4747ff9e;" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                            </div>
+                                <div>
+                                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button id="logout" type="submit" class=" btn btn-style-primary"><i class="bi bi-box-arrow-in-left"></i>Logout</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <div class="row w-100 p-4 g-3">
+                    @if (TempData["Alert-Status"] != null)
+                    {
+                        @if (TempData["Alert-Status"].ToString() == "200")
+                        {
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <h4 class="alert-heading">@TempData["Alert-Title"]</h4>
+                                <p>@TempData["Alert-Subtitle"]</p>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+                        else if (TempData["Alert-Status"].ToString() == "500")
+                        {
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <h4 class="alert-heading">@TempData["Alert-Title"]</h4>
+                                <p>@TempData["Alert-Subtitle"]</p>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+                    }
+                    <div>
+                        <h2 style="font-weight: 700;"><i class="bi @ViewData["Title-Icon"]"></i> @ViewData["Title-Page"]</h2>
+                        <h6 style="color: darkgray;">@ViewData["Subtitle-Page"]</h6>
+                    </div>
+                    <div class="container bg-white p-4 shadow" style="border-radius: 20px;">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - MinhaEscola.Service.Identity.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"/>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js" />
+    <script>
+        var itens = document.getElementsByClassName('nav-item');
+
+        function resetSubMenuSelected() {
+            Array.from(itens).forEach(function (elementForR) {
+                Array.from(elementForR.children).forEach(function (chidlrenFOrRemove) {
+                    if (chidlrenFOrRemove.nodeName == "UL") {
+                        Array.from(chidlrenFOrRemove.children).forEach(function (childrenFromChildrenRemove) {
+                            childrenFromChildrenRemove.classList.remove("activate-submenu-item");
+                        })
+                    }
+                })
+            })
+        }
+
+        function resetMenu() {
+            Array.from(itens).forEach(function (itenForRemoveClass) {
+                itenForRemoveClass.classList.remove('activate-menu-item');
+            });
+        }
+
+        function resetDropDowns() {
+            Array.from(itens).forEach(function (elementForR) {
+                Array.from(elementForR.children).forEach(function (chidlrenFOrRemove) {
+                    if (chidlrenFOrRemove.nodeName == "UL") {
+                        chidlrenFOrRemove.classList.remove("show");
+                    }
+                })
+            })
+        }
+
+        Array.from(itens).forEach(function (element) {
+            element.addEventListener('click', function (e) {
+                resetMenu();
+                element.classList.add('activate-menu-item');
+
+                if (Array.from(element.children).filter(item => item.nodeName == "UL").length == 0) {
+                    resetSubMenuSelected();
+                    resetDropDowns();
+                }
+
+                Array.from(element.children).forEach(function (children) {
+                    if (children.nodeName == "UL") {
+                        Array.from(children.children).forEach(function (childrenFromChildren) {
+                            childrenFromChildren.addEventListener('click', function (event) {
+                                resetSubMenuSelected();
+                                childrenFromChildren.classList.add("activate-submenu-item");
+                            })
+                        })
+                    }
+                })
+            });
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

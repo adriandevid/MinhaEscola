@@ -1,0 +1,101 @@
+﻿@page
+@using OpenIddict.Abstractions;
+@model MinhaEscola.Service.Identity.Web.Areas.Identity.Pages.Admin.Applications.Manage.IndexModel
+@{
+    ViewData["Title-Icon"] = "bi-bar-chart-line";
+    ViewData["Title-Page"] = "Management Applications";
+    ViewData["Subtitle-Page"] = "Charts, statistics and views for admin";
+}
+@inject IOpenIddictApplicationManager _applicationManager
+
+<div class="row w-100 g-4">
+    <div>
+        <a asp-page="./Register" class="btn btn-style-primary" style="width: 15rem;"><i class="bi bi-list-columns"></i>Create a new application</a>
+    </div>
+    <div class="d-flex flex-wrap gap-3">
+        <div>
+            <div class="card-chart">
+                <p class="card-title-chart"><i class="bi bi-database"></i> Qtd. applications</p>
+                <p class="card-subtitle-chart">applications registered for users</p>
+                <p class="card-value-chart">@Model.QuantityApplications</p>
+            </div>
+        </div>
+        <div>
+            <div class="card-chart" style="width: 25rem!important;">
+                <p class="card-title-chart"><i class="bi bi-database"></i> Qtd. applications authorizeds</p>
+                <p class="card-subtitle-chart">applications registered for users</p>
+                <p class="card-value-chart">@Model.QuantityApplicationsAuthorizeds</p>
+            </div>
+        </div>
+        <div>
+            <div class="card-chart">
+                <p class="card-title-chart"><i class="bi bi-database"></i> Qtd. not authorized</p>
+                <p class="card-subtitle-chart">applications registered for users</p>
+                <p class="card-value-chart">@Model.QuantityApplicationsNotAuthorizeds</p>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex flex-wrap gap-3">
+        <div class="card-chart" style="width: 100%; margin: 20px;">
+            <h3 style="margin: 0px;">Applications Registereds</h3>
+            <hr />
+            <table id="example" class="table table-striped nowrap" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th class="text-center">Id</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @await foreach (OpenIddict.EntityFrameworkCore.Models.OpenIddictEntityFrameworkCoreApplication application in _applicationManager.ListAsync())
+                    {
+                        <tr>
+                            <td class="text-center">@application.ClientId</td>
+                            <td class="text-center">@application.DisplayName</td>
+                            @*<td >
+                                @if (application.Permissions.Replace("[", "").Replace("]", "").Replace("\"", "").Split(",").Length > 1)
+                                {        
+                                    <p>@application.Permissions.Replace("[", "").Replace("]", "").Replace("\"", "").Split(",")[0]</p>
+                                    <p>@application.Permissions.Replace("[", "").Replace("]", "").Replace("\"", "").Split(",")[1]</p>
+                                    <p>...</p>
+                                } else
+                                {
+                                        <p>@application.Permissions.Replace("[", "").Replace("]", "").Replace("\"", "").Split(",")[0]</p>
+                                }
+                            </td>*@
+                            <td class="text-center"><a class="btn btn-danger" asp-page="./Index" asp-page-handler="Delete" asp-route-identifier="@application.ClientId"><i class="bi bi-trash-fill"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+                @*<tfoot>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Consent types</th>
+                        <th>Permissions</th>
+                        <th>Redirect Uris</th>
+                    </tr>
+                </tfoot>*@
+            </table>
+        </div>
+    </div>
+    <div> 
+        @*<div class="chart-data">
+            <div style="width: 20rem; padding-left: 20px; padding-top: 20px;">
+                <div style="line-height: 10px;">
+                    <p style="font-weight: 700; font-size: 20px; display: flex; gap: 10px; align-items: baseline;"><i class="bi bi-bar-chart-steps"></i>Applications authorizeds</p>
+                    <p style="font-weight: 500; font-size: 15px;color: darkgray;">Authorizeds by date of creation</p>
+                </div>
+                <hr />
+            </div>
+            <div style="height: 20rem;">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>*@
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/js/Applications/Manage/index.js"></script>
+}

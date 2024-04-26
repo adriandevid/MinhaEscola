@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Base\**" />
+    <EmbeddedResource Remove="Base\**" />
+    <None Remove="Base\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.21">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MinhaEscola.Service.Domain\MinhaEscola.Service.Domain.csproj" />
+    <ProjectReference Include="..\MinhaEscola.Service.Infrastructure.Commom\MinhaEscola.Service.Infrastructure.Commom.csproj" />
+    <ProjectReference Include="..\MinhaEscola.Service.Infrastructure.CrossCutting\MinhaEscola.Service.Infrastructure.CrossCutting.csproj" />
+  </ItemGroup>
+
+</Project>

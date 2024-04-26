@@ -1,0 +1,246 @@
+html {
+    font-size: 14px;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"!important;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.card {
+    border-radius: 20px;
+}
+
+.cursor {
+    height: 10px !important;
+    width: 10px !important;
+    border-style: solid !important;
+    border-radius: 100% !important;
+}
+
+.nav-item a {
+    color: #4747ff9e !important;
+}
+
+.navbar {
+    border-width: 1px!important;
+}
+
+@media (min-width: 0px) and (max-width: 60rem) {
+    .hidden-column {
+        display: none;
+    }
+}
+
+.activate-menu-item {
+    background-color: #4747ff9e !important;
+    color: white !important;
+    width: 100% !important;
+    border-radius: 15px !important;
+}
+
+.activate-submenu-item {
+    background-color: #0e0ec93b !important;
+    border-radius: 10px;
+    margin: 0px;
+    width: 100%;
+}
+    .activate-menu-item a {
+        color: white !important;
+    }
+
+    .activate-menu-item ul {
+        border-radius: 10px!important;
+        padding-top: 10px;
+        margin: 4px!important;
+    }
+
+        .activate-menu-item ul li {
+            padding: 10px;
+            border-radius: 10px !important;
+            background-color: #6262eb3b;
+            width: 100% !important;
+        }
+
+        .nav-item {
+            width: 100%;
+        }
+
+.nav-item a {
+    padding: 14px!important;
+    width: 100%!important;
+}
+
+.rounded-circle {
+    width: 4rem;
+    height: 4rem;
+}
+
+.chart-data {
+    box-shadow: 2px 2px 20px #80808030;
+    border-radius: 20px;
+    border-width: 0px;
+    padding: 2.5rem;
+    display: flex;
+    gap: 1px;
+    flex-direction: column;
+}
+
+.card-chart {
+    box-shadow: 2px 2px 20px #80808030;
+    border-radius: 20px;
+    border-width: 0px;
+    padding: 2.5rem;
+    width: 20rem;
+    display: flex;
+    gap: 1px;
+    flex-direction: column;
+}
+
+    .card-chart .card-title-chart {
+        font-weight: 700;
+        font-size: 1.3rem;
+        margin: 0px;
+    }
+    .card-chart .card-subtitle-chart {
+        font-weight: 500;
+        font-size: .9rem;
+        color: darkgray;
+        padding-left: 20px;
+    }
+
+    .card-chart .card-value-chart {
+        line-height: 0px;
+        margin: 0px;
+        padding-left: 20px;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+
+
+
+.btn-style-primary {
+    background-color: #4747ff9e !important;
+    color: white;
+    border-radius: 10px;
+    height: 3rem;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-weight: 700;
+}
+
+.btn-style-primary-outline {
+    border-color: #4747ff9e !important;
+    background-color: white !important;
+    color: #4747ff9e !important;
+    border-radius: 10px;
+    height: 3rem;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+    font-weight: 700;
+}
+
+.btn-style-primary:hover {
+    color: white !important;
+    background-color: #1313ff9e !important;
+}
+
+.text-column {
+    display: inline-block;
+    max-width: 10rem;
+    word-break: break-all;
+    white-space: normal;
+}
+
+table.dataTable.dtr-inline.collapsed>tbody>tr>td {
+    text-align: center;
+
+}
+
+table.dataTable>tbody>tr.child, ul.dtr-details {
+    width: 100%!important;
+    flex-direction: column;
+    display: flex!important;
+    align-items: flex-start!important;
+}
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before, table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
+    left: 13px;
+    height: 1em;
+    width: 1em;
+    margin-top: -2px;
+    padding: 3px;
+    display: block;
+    position: absolute;
+    color: white !important;
+    border: 0.15em solid white;
+    border-radius: 1em;
+    box-shadow: 0 0 0.2em #444;
+    box-sizing: content-box;
+    text-align: center;
+    text-indent: 0 !important;
+    font-family: "Courier New",Courier,monospace;
+    line-height: 1em;
+    content: "+" !important;
+    background-color: #4747ff80;
+}
+
+table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td.dtr-control:before, table.dataTable.dtr-inline.collapsed>tbody>tr.parent>th.dtr-control:before {
+    content: "-"!important;
+    background-color: #d33333;
+}
+
+.text-align {
+    width: 30rem;
+    text-align: center;
+}
+
+.column {
+    min-width: 20rem;
+}
+
+.breadcrumb-item.active a {
+    color: #6c757d!important;
+}
+
+.breadcrumb-item {
+    cursor: pointer;
+    color: #4747ff9e;
+}
+
+.hidden {
+    display: none;
+}
+
+
+.background-animate {
+    background: rgb(6,182,212);
+    background: linear-gradient(90deg, rgba(6,182,212,1) 0%, rgba(59,130,246,1) 100%);
+    background-size: 400%;
+    -webkit-animation: AnimationName 3s ease infinite;
+    -moz-animation: AnimationName 3s ease infinite;
+    animation: AnimationName 3s ease infinite;
+}
+
+@keyframes AnimationName {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}

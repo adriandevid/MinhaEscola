@@ -1,0 +1,24 @@
+
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+    volumes:
+      - ./src/MinhaEscola.Service.Infrastructure.Data/Scripts/minhaescola_db_hv1.0.0.sql:/docker-entrypoint-initdb.d/minhaescola_db_hv1.0.0.sql
+    expose:
+      - "543:5432"
+    ports:
+      - "543:5432"
+  minhaescola:
+    build: .
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Staging
+    expose:
+      - "7005:80"
+    ports:
+      - "7005:80"
+    depends_on:
+      - db

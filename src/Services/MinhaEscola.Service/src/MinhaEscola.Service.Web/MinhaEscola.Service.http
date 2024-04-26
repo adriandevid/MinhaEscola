@@ -1,0 +1,44 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+GET http://google.com
+Accept: application/json
+
+### create a new school
+POST https://localhost:7005/School/
+Content-Type: application/json
+
+{
+  "name": "string",
+  "nameAbbreviated": "string",
+  "situationOfOperationId": 1,
+  "dependencyAdministrativeId": 1,
+  "categorySchoolPrivatedId": 1,
+  "cnpj": "string",
+  "agencyPublicId": 1,
+  "locationOfOperationId": 1,
+  "address": {
+    "Street": "Sei la",
+    "CEP": "Sei la",
+    "Neighborhood": "Sei la",
+    "ZoneId": 1
+  }
+}
+
+### create a new PhysicalPerson
+POST https://localhost:7005/PhysicalPerson/
+Content-Type: application/json
+
+{
+  "name": "adrian devid menezes",
+  "year": 1,
+  "registerOfPhysicalPerson": "08397608508",
+  "sexId": 1,
+  "colorId": 1,
+  "registerGeneral": "string",
+  "nationalityId": 1,
+  "address": {
+    "street": "string",
+    "cep": "string",
+    "neighborhood": "string",
+    "zoneId": 1
+  }
+}

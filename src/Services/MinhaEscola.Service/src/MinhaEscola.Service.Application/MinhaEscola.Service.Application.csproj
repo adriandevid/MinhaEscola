@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MinhaEscola.Service.Domain\MinhaEscola.Service.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UseCases\Class\Interfaces\" />
+    <Folder Include="UseCases\Class\Responses\" />
+    <Folder Include="UseCases\Class\Queries\" />
+    <Folder Include="UseCases\Component\Events\" />
+    <Folder Include="UseCases\LevelEducation\Events\" />
+    <Folder Include="UseCases\Modality\Events\" />
+    <Folder Include="UseCases\Stage\Events\" />
+    <Folder Include="UseCases\Student\Validations\" />
+    <Folder Include="UseCases\Student\Responses\" />
+  </ItemGroup>
+
+</Project>

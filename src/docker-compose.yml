@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+    volumes:
+      - ./Services/MinhaEscola.Service/src/MinhaEscola.Service.Infrastructure.Data/Scripts/minhaescola_db_hv1.0.0.sql:/docker-entrypoint-initdb.d/minhaescola_db_hv1.0.0.sql
+    expose:
+      - "543:5432"
+    ports:
+      - "543:5432"
+  minhaescola_service_identity:
+    build: ./Services/MinhaEscola.Service.Identity/
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Staging
+    expose:
+      - "5026:80"
+    ports:
+      - "5026:80"
+    depends_on:
+      - db
+  minhaescola_service:
+    build: ./Services/MinhaEscola.Service/
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Staging
+    expose:
+      - "7005:80"
+    ports:
+      - "7005:80"
+    depends_on:
+      - db
+      - minhaescola_service_identity
+  minhaescola_history_book_api:
+    build: ./Web/history-book-api/
+    expose:
+      - "3000:3000"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - minhaescola_service
+      - minhaescola_service_identity
