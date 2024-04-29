@@ -74,6 +74,7 @@ export default function useApplicationHook() {
       
       
     function getSchema(name: string) {
+        console.log(apiDatas)
         var schemas: any = apiDatas.components.schemas;
         return schemas[name];
     }

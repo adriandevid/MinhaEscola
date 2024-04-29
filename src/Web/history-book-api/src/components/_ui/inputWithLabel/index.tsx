@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export function Input({ defaultValue, disabled, propertie, onChange } : { defaultValue: string, propertie?: undefined | string, disabled?: boolean | undefined, onChange?: undefined | ((value: any) => void) }) {
+export function Input({ defaultValue, disabled, propertie, onChange, fatherPropertieName } : { defaultValue: string, propertie?: undefined | string, disabled?: boolean | undefined, onChange?: undefined | ((value: any, propertie?: string, fatherPropertieName?: string | undefined) => void), fatherPropertieName?: string | undefined }) {
     const [click, onClick] = useState<boolean>(false);
     const [valueInput, setValue] = useState<string>(defaultValue);
   
@@ -28,7 +28,7 @@ export function Input({ defaultValue, disabled, propertie, onChange } : { defaul
             setValue(e.target.value);
   
             if(onChange != undefined) {
-              onChange(e.target.value);
+              onChange(e.target.value, propertie, fatherPropertieName);
             }
           }} /> : 
           <span className="text-green-400">&quot;{valueInput}&quot;</span>

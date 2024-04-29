@@ -9,6 +9,7 @@ import { AxiosStatic } from "axios";
 import axios from 'axios';
 import { AplicationContext } from "@/contexts/appContext";
 import { useSession } from "next-auth/react";
+import JsonGenerate from "@/components/_ui/jsonGenerate";
 
 export const requestTypeDefault: any = {
     post: async (request: any, instance: AxiosStatic, url: string) => await instance.post(url, request),
@@ -30,7 +31,7 @@ export function Router({ router, method, path } : { router: any, method: string,
     const { data: session, status } : any = useSession();
     
     const infoMethod = router.routers.filter((reference: any) => reference.method == method)[0];
-
+    console.log(infoMethod)
     //console.log(getSchema(infoMethod.content.requestBody.content["application/json"].schema.$ref.split('/')[3]))
     const responses = formatResponses(infoMethod.content.responses);
     
@@ -75,17 +76,36 @@ export function Router({ router, method, path } : { router: any, method: string,
       var prepareRequestBase: any = undefined;
   
       if(infoMethod.content.requestBody != undefined) {
-        prepareRequestBase = getSchema(infoMethod.content.requestBody.content["application/json"].schema.$ref.split('/')[3]).properties;
-        Object.keys(getSchema(infoMethod.content.requestBody.content["application/json"].schema.$ref.split('/')[3]).properties).filter((propertie) => {
-          prepareRequestBase[propertie] = "example";
-        })
-  
-        setPrepareRequest({
-          ...prepareRequestBase
-        })
+        if(getSchema(infoMethod.content.requestBody.content["application/json"].schema.$ref.split('/')[3]).properties != undefined) {
+          prepareRequestBase = getSchema(infoMethod.content.requestBody.content["application/json"].schema.$ref.split('/')[3]).properties;
+        
+          Object.keys(getSchema(infoMethod.content.requestBody.content["application/json"].schema.$ref.split('/')[3]).properties).filter((propertie) => {
+            prepareRequestBase[propertie] = "example";
+          })
+    
+          setPrepareRequest({
+            ...prepareRequestBase
+          })
+        } else if (getSchema(infoMethod.content.requestBody.content["application/json"].schema.$ref.split('/')[3]).allOf != undefined) {
+          prepareRequestBase = getSchema(infoMethod.content.requestBody.content["application/json"].schema.$ref.split('/')[3]).example;
+        
+          Object.keys(getSchema(infoMethod.content.requestBody.content["application/json"].schema.$ref.split('/')[3]).example).filter((propertie) => {
+            prepareRequestBase[propertie] = prepareRequestBase[propertie];
+          })
+    
+          setPrepareRequest({
+            ...prepareRequestBase
+          })
+        }
       }
     }, [router, method, path])
+
+
+    const schema = infoMethod.content.requestBody != undefined ? getSchema(infoMethod.content.requestBody.content["application/json"].schema.$ref.split('/')[3]) : undefined;
   
+    useEffect(function () {
+      console.log(prepareRequest)
+    }, [prepareRequest])
     return (
       <div className="p-10 w-full overscroll-x-none overflow-scroll overflow-x-hidden">
           <div className="pb-4">
@@ -127,37 +147,38 @@ export function Router({ router, method, path } : { router: any, method: string,
                         <p className="font-semibold pt-2 text-[15px] border-b-[3px] border-b-blue-400 mb-4 w-[10rem]">REQUEST BODY</p>
                         {
                           infoMethod.content.requestBody != undefined ?
-                          <div>
-                            <p className="text-sm/6 font-[700]">{"{"}</p>
-                            <div className="flex flex-col gap-2 ml-4">
-                              {
+                          <JsonGenerate properties={schema.properties != undefined ? schema.properties : schema.allOf != undefined ? schema.example : {}} loading={loading} modelChange={(value: any, propertie: string, fatherPropertieName?: string | undefined) => {
+                            if(fatherPropertieName != undefined){
+                              if(prepareRequest == undefined) {
+                                var prepareRequestBase: any = {}
+                                prepareRequestBase[fatherPropertieName][propertie] = value;
                                 
-                                Object.keys(getSchema(infoMethod.content.requestBody.content["application/json"].schema.$ref.split('/')[3])!.properties).map(function (propertie, index) {
-                                  return (
-                                    <div className="flex gap-2" key={index}>
-                                      <span className="text-sm/6 font-[700]">{propertie}</span>: <Input disabled={loading} defaultValue="example" propertie={propertie} onChange={(value: any) => {
-                                        if(prepareRequest == undefined) {
-                                          var prepareRequestBase: any = {}
-                                          prepareRequestBase[propertie] = value;
-                                          
-                                          setPrepareRequest({
-                                            ...prepareRequestBase
-                                          })
-                                        } else {
-                                          prepareRequest[propertie] = value;
-                                          setPrepareRequest({
-                                            ...prepareRequest
-                                          })  
-                                        }
-                                      }} />
-                                    </div>
-                                  )
-                                }) 
+                                setPrepareRequest({
+                                  ...prepareRequestBase
+                                })
+                              } else {
+                                prepareRequest[fatherPropertieName][propertie] = value;
+                                setPrepareRequest({
+                                  ...prepareRequest
+                                })  
                               }
-                              
-                            </div>
-                            <p className="text-sm/6 font-[700]">{"}"} </p>
-                          </div> : <p className="text-sm/6">No Request Body</p>
+                            } else {
+                              if(prepareRequest == undefined) {
+                                var prepareRequestBase: any = {}
+                                prepareRequestBase[propertie] = value;
+                                
+                                setPrepareRequest({
+                                  ...prepareRequestBase
+                                })
+                              } else {
+                                prepareRequest[propertie] = value;
+                                setPrepareRequest({
+                                  ...prepareRequest
+                                })  
+                              }
+                            }
+                          }}></JsonGenerate>
+                          : <p className="text-sm/6">No Request Body</p>
                         }
                         <p className="font-semibold pt-5 text-[15px] border-b-[3px] border-b-blue-400 mb-4 w-[10rem]">PARAMS</p>
                         {
