@@ -1,9 +1,11 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using MinhaEscola.Service.Application.UseCases.Base;
 using MinhaEscola.Service.Application.UseCases.Base.Response;
 using MinhaEscola.Service.Application.UseCases.School.Requests;
 using MinhaEscola.Service.Domain.Base.Interfaces;
 using MinhaEscola.Service.Domain.Board.School.Interfaces;
+using MinhaEscola.Service.Infrastructure.Commom;
 
 namespace MinhaEscola.Service.Application.UseCases.School.Commands
 {
@@ -11,11 +13,13 @@ namespace MinhaEscola.Service.Application.UseCases.School.Commands
     {
         private readonly IUnitOfWorkResource _unitOfWork;
         private readonly ISchoolRepository _schoolRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CreateSchoolCommandHandler(IUnitOfWorkResource unitOfWorkResource, ISchoolRepository schoolRepository)
+        public CreateSchoolCommandHandler(IUnitOfWorkResource unitOfWorkResource, ISchoolRepository schoolRepository, IHttpContextAccessor httpContextAccessor)
         {
             _unitOfWork = unitOfWorkResource;
             _schoolRepository = schoolRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<ApiResponse> Handle(CreateSchoolRequest request, CancellationToken cancellationToken)
@@ -24,7 +28,7 @@ namespace MinhaEscola.Service.Application.UseCases.School.Commands
 
             var school = new Domain.Board.School.Limits.School(request.Name, request.NameAbbreviated, request.SituationOfOperationId, request.DependencyAdministrativeId, request.CategorySchoolPrivatedId, request.CNPJ, request.AgencyPublicId, address, request.TypeOrganization);
 
-            school.AssignUserToSchool(request.UserReference);
+            school.AssignUserToSchool(_httpContextAccessor.GetUserId());
 
             _schoolRepository.Create(school);
 

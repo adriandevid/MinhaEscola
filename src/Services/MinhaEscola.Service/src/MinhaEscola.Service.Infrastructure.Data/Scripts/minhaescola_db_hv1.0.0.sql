@@ -451,3 +451,66 @@ CREATE TABLE public.subject (
 	CONSTRAINT subject_pkey PRIMARY KEY (id),
 	CONSTRAINT lesson_fk FOREIGN KEY (lesson_id) REFERENCES public.lesson(id)
 );
+
+
+------------ Inserts of tables -------------
+
+------------ zone ------------
+INSERT INTO public."zone"
+("name")
+VALUES('urban');
+
+INSERT INTO public."zone"
+("name")
+VALUES('rural');
+
+
+insert into level_education (description) values ('Educa��o b�sica');
+insert into level_education (description) values ('Educa��o superior');
+
+
+insert into stage (level_education_id, description) values (1, 'Educa��o infantil');
+insert into stage (level_education_id, description) values (1, 'Educa��o fundamental');
+insert into stage (level_education_id, description) values (1, 'Educa��o m�dio');
+
+insert into stage (level_education_id, description) values (2, 'Bacharel');
+insert into stage (level_education_id, description) values (2, 'Mestrado');
+insert into stage (level_education_id, description) values (2, 'Tecnologo');
+insert into stage (level_education_id, description) values (2, 'P�s-grauda��o');
+
+
+insert into modality (description) values ('Educa��o Especial');
+insert into modality (description) values ('Educa��o de Jovens e Adultos (EJA)');
+insert into modality (description) values ('Educa��o Profissional e Tecnologica (EPT)');
+insert into modality (description) values ('Educa��o a Dist�ncia (EAD)');
+insert into modality (description) values ('Educa��o do Campo');
+insert into modality (description) values ('Educa��o Ind�gena');
+insert into modality (description) values ('Educa��o Quilombola');
+insert into modality (description) values ('Educa��o Presencial');
+
+
+insert into public.denomination (description) values ('Creche (0 a 3 anos)');
+insert into public.denomination (description) values ('Pr�-escola (4 e 5 anos)');
+insert into public.denomination (description) values ('Unificada (0 a 5 anos)');
+insert into public.denomination (description) values ('1� ano ');
+insert into public.denomination (description) values ('2� ano ');
+insert into public.denomination (description) values ('3� ano ');
+insert into public.denomination (description) values ('4� ano ');
+insert into public.denomination (description) values ('5� ano ');
+insert into public.denomination (description) values ('6� ano ');
+insert into public.denomination (description) values ('7� ano ');
+insert into public.denomination (description) values ('8� ano ');
+insert into public.denomination (description) values ('9� ano ');
+insert into public.denomination (description) values ('Multi ');
+insert into public.denomination (description) values ('Corre��o de fluxo ');
+insert into public.denomination (description) values ('1� ano/s�rie ');
+insert into public.denomination (description) values ('2� ano/s�rie ');
+insert into public.denomination (description) values ('3� ano/s�rie ');
+insert into public.denomination (description) values ('4� ano/s�rie ');
+insert into public.denomination (description) values ('N�o s�riada ');
+insert into public.denomination (description) values ('1� s�rie ');
+insert into public.denomination (description) values ('2� s�rie ');
+insert into public.denomination (description) values ('3� s�rie ');
+insert into public.denomination (description) values ('4� s�rie ');
+
+

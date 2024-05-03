@@ -102,7 +102,7 @@ export function Router({ router, method, path } : { router: any, method: string,
 
 
     const schema = infoMethod.content.requestBody != undefined ? getSchema(infoMethod.content.requestBody.content["application/json"].schema.$ref.split('/')[3]) : undefined;
-  
+    console.log(schema)
     useEffect(function () {
       console.log(prepareRequest)
     }, [prepareRequest])

@@ -1,3 +1,4 @@
+\connect minhaescoladb_h
 ----------- situation operation ------------
 INSERT INTO public.situation_operation
 (description)
@@ -85,52 +86,52 @@ INSERT INTO public.location_operation
 (description)
 VALUES('Others');
 
-insert into level_education (description) values ('Educação básica');
-insert into level_education (description) values ('Educação superior');
+insert into level_education (description) values ('Educaï¿½ï¿½o bï¿½sica');
+insert into level_education (description) values ('Educaï¿½ï¿½o superior');
 
 
-insert into stage (level_education_id, description) values (1, 'Educação infantil');
-insert into stage (level_education_id, description) values (1, 'Educação fundamental');
-insert into stage (level_education_id, description) values (1, 'Educação médio');
+insert into stage (level_education_id, description) values (1, 'Educaï¿½ï¿½o infantil');
+insert into stage (level_education_id, description) values (1, 'Educaï¿½ï¿½o fundamental');
+insert into stage (level_education_id, description) values (1, 'Educaï¿½ï¿½o mï¿½dio');
 
 insert into stage (level_education_id, description) values (2, 'Bacharel');
 insert into stage (level_education_id, description) values (2, 'Mestrado');
 insert into stage (level_education_id, description) values (2, 'Tecnologo');
-insert into stage (level_education_id, description) values (2, 'Pós-graudação');
+insert into stage (level_education_id, description) values (2, 'Pï¿½s-graudaï¿½ï¿½o');
 
 
-insert into modality (description) values ('Educação Especial');
-insert into modality (description) values ('Educação de Jovens e Adultos (EJA)');
-insert into modality (description) values ('Educação Profissional e Tecnologica (EPT)');
-insert into modality (description) values ('Educação a Distância (EAD)');
-insert into modality (description) values ('Educação do Campo');
-insert into modality (description) values ('Educação Indígena');
-insert into modality (description) values ('Educação Quilombola');
-insert into modality (description) values ('Educação Presencial');
+insert into modality (description) values ('Educaï¿½ï¿½o Especial');
+insert into modality (description) values ('Educaï¿½ï¿½o de Jovens e Adultos (EJA)');
+insert into modality (description) values ('Educaï¿½ï¿½o Profissional e Tecnologica (EPT)');
+insert into modality (description) values ('Educaï¿½ï¿½o a Distï¿½ncia (EAD)');
+insert into modality (description) values ('Educaï¿½ï¿½o do Campo');
+insert into modality (description) values ('Educaï¿½ï¿½o Indï¿½gena');
+insert into modality (description) values ('Educaï¿½ï¿½o Quilombola');
+insert into modality (description) values ('Educaï¿½ï¿½o Presencial');
 
 
 insert into public.denomination (description) values ('Creche (0 a 3 anos)');
-insert into public.denomination (description) values ('Pré-escola (4 e 5 anos)');
+insert into public.denomination (description) values ('Prï¿½-escola (4 e 5 anos)');
 insert into public.denomination (description) values ('Unificada (0 a 5 anos)');
-insert into public.denomination (description) values ('1º ano ');
-insert into public.denomination (description) values ('2º ano ');
-insert into public.denomination (description) values ('3º ano ');
-insert into public.denomination (description) values ('4º ano ');
-insert into public.denomination (description) values ('5º ano ');
-insert into public.denomination (description) values ('6º ano ');
-insert into public.denomination (description) values ('7º ano ');
-insert into public.denomination (description) values ('8º ano ');
-insert into public.denomination (description) values ('9º ano ');
+insert into public.denomination (description) values ('1ï¿½ ano ');
+insert into public.denomination (description) values ('2ï¿½ ano ');
+insert into public.denomination (description) values ('3ï¿½ ano ');
+insert into public.denomination (description) values ('4ï¿½ ano ');
+insert into public.denomination (description) values ('5ï¿½ ano ');
+insert into public.denomination (description) values ('6ï¿½ ano ');
+insert into public.denomination (description) values ('7ï¿½ ano ');
+insert into public.denomination (description) values ('8ï¿½ ano ');
+insert into public.denomination (description) values ('9ï¿½ ano ');
 insert into public.denomination (description) values ('Multi ');
-insert into public.denomination (description) values ('Correção de fluxo ');
-insert into public.denomination (description) values ('1º ano/série ');
-insert into public.denomination (description) values ('2º ano/série ');
-insert into public.denomination (description) values ('3º ano/série ');
-insert into public.denomination (description) values ('4º ano/série ');
-insert into public.denomination (description) values ('Não sériada ');
-insert into public.denomination (description) values ('1º série ');
-insert into public.denomination (description) values ('2º série ');
-insert into public.denomination (description) values ('3º série ');
-insert into public.denomination (description) values ('4º série ');
+insert into public.denomination (description) values ('Correï¿½ï¿½o de fluxo ');
+insert into public.denomination (description) values ('1ï¿½ ano/sï¿½rie ');
+insert into public.denomination (description) values ('2ï¿½ ano/sï¿½rie ');
+insert into public.denomination (description) values ('3ï¿½ ano/sï¿½rie ');
+insert into public.denomination (description) values ('4ï¿½ ano/sï¿½rie ');
+insert into public.denomination (description) values ('Nï¿½o sï¿½riada ');
+insert into public.denomination (description) values ('1ï¿½ sï¿½rie ');
+insert into public.denomination (description) values ('2ï¿½ sï¿½rie ');
+insert into public.denomination (description) values ('3ï¿½ sï¿½rie ');
+insert into public.denomination (description) values ('4ï¿½ sï¿½rie ');
 
 
