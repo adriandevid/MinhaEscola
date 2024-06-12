@@ -27,26 +27,7 @@ builder.Services.SwaggerDocument(o =>
         s.Title = "Minha Escola - Service";
         s.Version = "v1";
     };
-}).SwaggerDocument(o =>
-   {
-       o.MaxEndpointVersion = 1;
-       o.DocumentSettings = s =>
-       {
-           s.DocumentName = "Release 1.0";
-           s.Title = "my api";
-           s.Version = "v1.0";
-       };
-   })
-   .SwaggerDocument(o =>
-   {
-       o.MaxEndpointVersion = 2;
-       o.DocumentSettings = s =>
-       {
-           s.DocumentName = "Release 2.0";
-           s.Title = "my api";
-           s.Version = "v2.0";
-       };
-   });
+});
 
 builder.Services.AddIocRegistryBasicConfiguration(builder);
 
@@ -59,7 +40,7 @@ builder.Services.AddCors(x => x.AddPolicy("Total",
         .AllowAnyMethod()
 ));
 
-builder.Services.AddApiVersioningConfiguration();
+// builder.Services.AddApiVersioningConfiguration();
 builder.Services.AddAutoMapperConfiguration();
 builder.Services.RegisterServicesToRepositories();
 builder.Services.AssignValidationConfiguration();
@@ -117,7 +98,7 @@ app.MapHealthChecks("/healthz");
 
 app.UseCors("Total");
 
-app.AddApiVersionGroupConfigurationApp();
+// app.AddApiVersionGroupConfigurationApp();
 
 app.UseFastEndpoints();
 
