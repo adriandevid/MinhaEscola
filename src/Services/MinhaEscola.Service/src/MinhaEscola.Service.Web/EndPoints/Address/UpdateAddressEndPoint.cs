@@ -5,7 +5,7 @@ using MinhaEscola.Service.Application.UseCases.Base.Response;
 
 namespace MinhaEscola.Service.Web.EndPoints.Address
 {
-    [HttpPut("address/")]
+    [HttpPut("api/v{version:apiVersion}/address/")]
     [Authorize]
     public class UpdateAddressEndPoint : Endpoint<UpdateAddressRequest, ApiResponse>
     {

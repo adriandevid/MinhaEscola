@@ -5,7 +5,7 @@ using MinhaEscola.Service.Application.UseCases.Address.Requests;
 
 namespace MinhaEscola.Service.Web.EndPoints.Address
 {
-    [HttpGet("address/{Id}")]
+    [HttpGet("api/v{version:apiVersion}/{Id}")]
     [Authorize]
     public class GeAddressByIdEndPoint : Endpoint<GetAddressByIdRequest>
     {

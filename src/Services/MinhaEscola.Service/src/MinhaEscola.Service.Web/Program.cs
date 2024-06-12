@@ -3,31 +3,22 @@ using Consul;
 using FastEndpoints.Swagger;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using MinhaEscola.Service.Application.UseCases.Base.Response;
-using MinhaEscola.Service.Infrastructure.CrossCutting.Services.Websocket;
-using MinhaEscola.Service.Infrastructure.CrossCutting.Services.Websocket.Interfaces;
 using MinhaEscola.Service.Infrastructure.Data.Context;
 using MinhaEscola.Service.Infrastructure.IOC;
 using MinhaEscola.Service.Web.Configurations;
-using MinhaEscola.Service.Web.Models;
-using OpenIddict.Validation.AspNetCore;
-using System.Net.WebSockets;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: false, reloadOnChange: true);
+
+builder.AddAppSettingConfiguration();
 
 builder.Services.AddFastEndpoints();
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<JsonOptions>(options =>
-    options.SerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault | System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull);
+builder.Services.AddJsonSerializerConfiguration();
 
 builder.Services.SwaggerDocument(o =>
 {
@@ -36,16 +27,28 @@ builder.Services.SwaggerDocument(o =>
         s.Title = "Minha Escola - Service";
         s.Version = "v1";
     };
-});
+}).SwaggerDocument(o =>
+   {
+       o.MaxEndpointVersion = 1;
+       o.DocumentSettings = s =>
+       {
+           s.DocumentName = "Release 1.0";
+           s.Title = "my api";
+           s.Version = "v1.0";
+       };
+   })
+   .SwaggerDocument(o =>
+   {
+       o.MaxEndpointVersion = 2;
+       o.DocumentSettings = s =>
+       {
+           s.DocumentName = "Release 2.0";
+           s.Title = "my api";
+           s.Version = "v2.0";
+       };
+   });
 
-builder.Services.AddSingleton<ClientWebSocket>();
-
-builder.Services.AddSingleton<IHostedService, ServiceDiscoveryConfiguration>();
-
-builder.Services.AddScoped<IWebSocketService, WebSocketService>();
-
-builder.Services.Configure<ApiConfigurationModel>(builder.Configuration.GetSection("ProjetoService"));
-builder.Services.Configure<ConsulConfigurationModel>(builder.Configuration.GetSection("Consul"));
+builder.Services.AddIocRegistryBasicConfiguration(builder);
 
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 var connectionEvents = builder.Configuration.GetConnectionString("MartenConnection");
@@ -56,13 +59,13 @@ builder.Services.AddCors(x => x.AddPolicy("Total",
         .AllowAnyMethod()
 ));
 
+builder.Services.AddApiVersioningConfiguration();
 builder.Services.AddAutoMapperConfiguration();
 builder.Services.RegisterServicesToRepositories();
 builder.Services.AssignValidationConfiguration();
 builder.Services.AddMartenConfiguration(connectionEvents);
 
-builder.Services.AddHealthChecks()
-    .AddDbContextCheck<ApplicationContext>();
+builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationContext>();
 
 var consulAddress = builder.Configuration.GetSection("Consul")["Url"];
 var identityHost = builder.Configuration.GetSection("IdentityHost");
@@ -72,24 +75,7 @@ builder.Services.AddSingleton<IConsulClient, ConsulClient>(provider =>
         config.Address = new Uri(consulAddress);
     }));
 
-builder.Services.AddOpenIddict()
-    .AddValidation(options =>
-    {
-        options.SetIssuer(identityHost.Value);
-        
-        options.AddAudiences("api-service");
-        
-        options.UseIntrospection()
-               .SetClientId("api-service")
-               .SetClientSecret("api-service");
-
-        options.UseSystemNetHttp();
-
-        options.UseAspNetCore();
-    });
-
-builder.Services.AddAuthentication(OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme);
-builder.Services.AddAuthorization();
+builder.AddAuthenticationConfiguration();
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
 {
@@ -130,6 +116,8 @@ app.UseAuthorization();
 app.MapHealthChecks("/healthz");
 
 app.UseCors("Total");
+
+app.AddApiVersionGroupConfigurationApp();
 
 app.UseFastEndpoints();
 
